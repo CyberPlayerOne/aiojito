@@ -74,7 +74,7 @@ class AsyncSearcher:
         :param bundle_ids: An array of bundle ids to confirm, as base-58 encoded strings (up to a maximum of 5).
         :return: A BundleStatusesResponse object containing the context slot and a list of BundleStatus objects.
         """
-        response = await self._send_rpc_request("/api/v1/bundles", "getBundleStatuses", [bundle_ids])
+        response = await self._send_rpc_request("/api/v1/getBundleStatuses", "getBundleStatuses", [bundle_ids])
         result = self._extract_result(response, "getBundleStatuses")
         context_slot = result['context']['slot']
         statuses = [
@@ -96,7 +96,7 @@ class AsyncSearcher:
 
         :return: Tip accounts as a list of strings.
         """
-        response = await self._send_rpc_request("/api/v1/bundles", "getTipAccounts")
+        response = await self._send_rpc_request("/api/v1/getTipAccounts", "getTipAccounts")
         return self._extract_result(response, "getTipAccounts")
 
     async def send_bundle(self, transactions: List[str]) -> str:

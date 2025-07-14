@@ -1,8 +1,12 @@
 import unittest
 from unittest.mock import patch
 
+import aiohttp
+import asyncio
+
 # from jito_py.searcher import Searcher, BundleStatusesResponse, BundleStatus
 from src.aiojito.api import Searcher, BundleStatusesResponse, BundleStatus
+from src.aiojito.async_api import AsyncSearcher
 
 
 class TestSearcher(unittest.TestCase):
@@ -84,6 +88,19 @@ class TestSearcher(unittest.TestCase):
         result = self.searcher.get_bundle_statuses(["892b79ed49138bfb3aa5441f0df6e06ef34f9ee8f3976c15b323605bae0cf51d"])
         print(result)
         self.assertEqual(result, expected_response)
+
+    def test_get_tip_accounts2(self):
+        async def get_tip_accounts_async():
+            async with aiohttp.ClientSession() as session:
+                # Create a searcher instance
+                block_engine_url = "https://ny.mainnet.block-engine.jito.wtf"
+                searcher = AsyncSearcher(block_engine_url=block_engine_url, session=session)
+
+                # Get tip accounts
+                tip_accounts = await searcher.get_tip_accounts()
+                print("Tip Accounts:", tip_accounts)
+
+        asyncio.run(get_tip_accounts_async())
 
 
 if __name__ == "__main__":
