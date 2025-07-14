@@ -31,33 +31,39 @@ You can get the address of the block engine from jito's website
 ### 2.Interact with Jito as a searcher asynchronously
 
 ```python  
+import asyncio
 import aiohttp
 from aiojito.async_api.searcher import AsyncSearcher
 
-# Create a session context manager
-async with aiohttp.ClientSession() as session:
-    # Create a searcher instance  
-    block_engine_url = "https://ny.mainnet.block-engine.jito.wtf"
-    searcher = AsyncSearcher(block_engine_url=block_engine_url, session=session)
 
-    # Get tip accounts  
-    tip_accounts = await searcher.get_tip_accounts()
-    print("Tip Accounts:", tip_accounts)
+async def main():
+    # Create a session context manager
+    async with aiohttp.ClientSession() as session:
+        # Create a searcher instance  
+        block_engine_url = "https://ny.mainnet.block-engine.jito.wtf"
+        searcher = AsyncSearcher(block_engine_url=block_engine_url, session=session)
 
-    # Get bundle statuses  
-    bundle_ids = ["your_bundle_id_here"]
-    bundle_statuses = await searcher.get_bundle_statuses(bundle_ids)
-    print("Bundle Statuses:", bundle_statuses)
+        # Get tip accounts  
+        tip_accounts = await searcher.get_tip_accounts()
+        print("Tip Accounts:", tip_accounts)
 
-    # Send a bundle  
-    transactions = ["your_base58_encoded_transaction_here"]
-    bundle_id = await searcher.send_bundle(transactions)
-    print("Sent Bundle ID:", bundle_id)
+        # Get bundle statuses  
+        bundle_ids = ["your_bundle_id_here"]
+        bundle_statuses = await searcher.get_bundle_statuses(bundle_ids)
+        print("Bundle Statuses:", bundle_statuses)
 
-    # Send a transaction  
-    transaction = "your_base58_encoded_transaction_here"
-    transaction_id = await searcher.send_transaction(transaction)
-    print("Sent Transaction ID:", transaction_id)
+        # Send a bundle  
+        transactions = ["your_base58_encoded_transaction_here"]
+        bundle_id = await searcher.send_bundle(transactions)
+        print("Sent Bundle ID:", bundle_id)
+
+        # Send a transaction  
+        transaction = "your_base58_encoded_transaction_here"
+        transaction_id = await searcher.send_transaction(transaction)
+        print("Sent Transaction ID:", transaction_id)
+
+
+asyncio.run(main())
 ```
 
 ## License
