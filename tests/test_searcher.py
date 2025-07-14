@@ -1,14 +1,15 @@
 import unittest
 from unittest.mock import patch
 
-from jito_py.searcher import Searcher, BundleStatusesResponse, BundleStatus
+# from jito_py.searcher import Searcher, BundleStatusesResponse, BundleStatus
+from api.searcher import Searcher, BundleStatusesResponse, BundleStatus
 
 
 class TestSearcher(unittest.TestCase):
     def setUp(self):
         self.searcher = Searcher("https://mainnet.block-engine.jito.wtf")
 
-    @patch('jito_py.searcher.requests.post')
+    @patch('api.searcher.requests.post')
     def test_get_tip_accounts(self, mock_post):
         mock_post.return_value.json.return_value = {
             "jsonrpc": "2.0",
@@ -40,7 +41,7 @@ class TestSearcher(unittest.TestCase):
 
         self.assertEqual(result, expected_response)
 
-    @patch('jito_py.searcher.requests.post')
+    @patch('api.searcher.requests.post')
     def test_get_bundle_statuses(self, mock_post):
         mock_post.return_value.json.return_value = {
             "jsonrpc": "2.0",
